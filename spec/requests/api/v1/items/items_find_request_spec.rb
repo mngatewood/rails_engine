@@ -33,7 +33,7 @@ describe "Items finders" do
 
       item = JSON.parse(response.body)
       expect(response).to be_successful
-      expect(item["description"]).to eq(items.first.description)
+      expect(item["id"]).to eq(items.first.id)
     end
 
     it "finds a single item by unit price" do
@@ -44,18 +44,22 @@ describe "Items finders" do
 
       item = JSON.parse(response.body)
       expect(response).to be_successful
-      expect(item["unit_price"].to_f).to eq(items.first.unit_price)
+      expect(item["id"].to_f).to eq(items.first.id)
     end
 
     it "finds a single item by merchant id" do
-      merchant = create(:merchant)
-      items = create_list(:item, 3, merchant_id: merchant.id)
+      merchant_1 = create(:merchant)
+      merchant_2 = create(:merchant)
+      merchant_3 = create(:merchant)
+      item_1 = create(:item, merchant_id: merchant_1.id)
+      item_2 = create(:item, merchant_id: merchant_2.id)
+      item_3 = create(:item, merchant_id: merchant_3.id)
 
-      get "/api/v1/items/find?merchant_id=#{items.first.merchant_id}"
+      get "/api/v1/items/find?merchant_id=#{item_1.merchant_id}"
 
       item = JSON.parse(response.body)
       expect(response).to be_successful
-      expect(item["merchant_id"]).to eq(items.first.merchant_id)
+      expect(item["id"]).to eq(item_1.id)
     end
 
     xit "finds a single merchant by created_at" do
@@ -66,7 +70,7 @@ describe "Items finders" do
 
       item = JSON.parse(response.body)
       expect(response).to be_successful
-      expect(item["created_at"]).to eq(items.first.created_at)
+      expect(item["id"]).to eq(items.first.id)
     end
 
     xit "finds a single merchant by updated_at" do
@@ -77,7 +81,7 @@ describe "Items finders" do
 
       item = JSON.parse(response.body)
       expect(response).to be_successful
-      expect(item["updated_at"]).to eq(items.first.updated_at)
+      expect(item["id"]).to eq(items.first.id)
     end
 
   end
