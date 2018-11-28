@@ -8,6 +8,7 @@ describe Customer, type: :model do
   end
 
   describe 'Relationship' do
+    it { should have_many :invoices }
   end
 
   describe 'Methods' do

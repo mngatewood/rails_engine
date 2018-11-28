@@ -8,6 +8,7 @@ describe Merchant, type: :model do
 
   describe 'Relationship' do
     it { should have_many :items }
+    it { should have_many :invoices }
   end
 
   describe 'Methods' do
