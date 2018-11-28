@@ -16,3 +16,9 @@ customers = CSV.read('db/csv/customers.csv', headers: true, header_converters: :
 customers.each do |customer|
   Customer.create!(customer.to_h)
 end
+
+invoices = CSV.read('db/csv/invoices.csv', headers: true, header_converters: :symbol)
+invoices.each do |invoice|
+  Invoice.create!(invoice.to_h)
+end
+
