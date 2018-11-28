@@ -11,6 +11,7 @@ describe Item, type: :model do
 
   describe 'Relationship' do
     it { should belong_to :merchant }
+    it { should have_many :invoices }
   end
 
   describe 'Methods' do

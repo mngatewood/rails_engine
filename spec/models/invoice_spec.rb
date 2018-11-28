@@ -10,6 +10,7 @@ describe Invoice, type: :model do
   describe 'Relationship' do
     it { should belong_to :customer }
     it { should belong_to :merchant }
+    it { should have_many :items }
   end
 
   describe 'Methods' do
