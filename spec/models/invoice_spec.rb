@@ -11,6 +11,7 @@ describe Invoice, type: :model do
     it { should belong_to :customer }
     it { should belong_to :merchant }
     it { should have_many :items }
+    it { should have_many :transactions }
   end
 
   describe 'Methods' do
