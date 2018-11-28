@@ -99,7 +99,7 @@ describe "Items finders" do
       expect(filtered_items.first["id"]).to eq(items.first.id)
     end
     
-    xit "finds all items by name" do
+    it "finds all items by name" do
       merchant = create(:merchant)
       item_1 = create(:item, merchant_id: merchant.id, name: "Television")
       item_2 = create(:item, merchant_id: merchant.id, name: "Speakers")
@@ -150,7 +150,7 @@ describe "Items finders" do
       expect(filtered_items.last["unit_price"]).to eq(item_1.unit_price)
     end
     
-    xit "finds all items by merchant_id" do
+    it "finds all items by merchant_id" do
       merchant_1 = create(:merchant)
       merchant_2 = create(:merchant)
       merchant_3 = create(:merchant)
@@ -165,8 +165,8 @@ describe "Items finders" do
       filtered_items = JSON.parse(response.body)
       expect(response).to be_successful
       expect(filtered_items.count).to eq(2)
-      expect(filtered_items.first["merchant_id"]).to eq(item_1.merchant_id)
-      expect(filtered_items.last["merchant_id"]).to eq(item_1.merchant_id)
+      expect(filtered_items.first["id"]).to eq(item_1.id)
+      expect(filtered_items.last["id"]).to eq(item_3.id)
     end
     
     xit "finds a all items by created_at" do
