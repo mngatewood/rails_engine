@@ -86,8 +86,122 @@ describe "Items finders" do
 
   end
 
-  describe "multi finders" do
+  describe 'multi-finders' do
 
+    it "finds all items by id" do
+      merchant = create(:merchant)
+      items = create_list(:item, 3, merchant_id: merchant.id)
+
+      get "/api/v1/items/find_all?id=#{items.first.id}"
+
+      filtered_items = JSON.parse(response.body)
+      expect(response).to be_successful
+      expect(filtered_items.first["id"]).to eq(items.first.id)
+    end
+    
+    xit "finds all items by name" do
+      merchant = create(:merchant)
+      item_1 = create(:item, merchant_id: merchant.id, name: "Television")
+      item_2 = create(:item, merchant_id: merchant.id, name: "Speakers")
+      item_3 = create(:item, merchant_id: merchant.id, name: "Television")
+      item_4 = create(:item, merchant_id: merchant.id, name: "Microwave")
+      item_5 = create(:item, merchant_id: merchant.id, name: "Blender")
+
+      get "/api/v1/items/find_all?name=#{item_1.name}"
+
+      filtered_items = JSON.parse(response.body)
+      expect(response).to be_successful
+      expect(filtered_items.count).to eq(2)
+      expect(filtered_items.first["name"]).to eq(item_1.name)
+      expect(filtered_items.last["name"]).to eq(item_1.name)
+    end
+    
+    xit "finds all items by description" do
+      merchant = create(:merchant)
+      item_1 = create(:item, merchant_id: merchant.id, description: "It shows movies")
+      item_2 = create(:item, merchant_id: merchant.id, description: "It plays sound")
+      item_3 = create(:item, merchant_id: merchant.id, description: "It shows movies")
+      item_4 = create(:item, merchant_id: merchant.id, description: "It heats food")
+      item_5 = create(:item, merchant_id: merchant.id, description: "It mixes food")
+
+      get "/api/v1/items/find_all?description=#{item_1.description}"
+
+      filtered_items = JSON.parse(response.body)
+      expect(response).to be_successful
+      expect(filtered_items.count).to eq(2)
+      expect(filtered_items.first["description"]).to eq(item_1.description)
+      expect(filtered_items.last["description"]).to eq(item_1.description)
+    end
+    
+    xit "finds all items by unit price" do
+      merchant = create(:merchant)
+      item_1 = create(:item, merchant_id: merchant.id, unit_price: 899.00)
+      item_2 = create(:item, merchant_id: merchant.id, unit_price: 199.00)
+      item_3 = create(:item, merchant_id: merchant.id, unit_price: 899.00)
+      item_4 = create(:item, merchant_id: merchant.id, unit_price: 49.99)
+      item_5 = create(:item, merchant_id: merchant.id, unit_price: 19.99)
+
+      get "/api/v1/items/find_all?unit_price=#{item_1.unit_price}"
+
+      filtered_items = JSON.parse(response.body)
+      expect(response).to be_successful
+      expect(filtered_items.count).to eq(2)
+      expect(filtered_items.first["unit_price"]).to eq(item_1.unit_price)
+      expect(filtered_items.last["unit_price"]).to eq(item_1.unit_price)
+    end
+    
+    xit "finds all items by merchant_id" do
+      merchant_1 = create(:merchant)
+      merchant_2 = create(:merchant)
+      merchant_3 = create(:merchant)
+      item_1 = create(:item, merchant_id: merchant_1.id)
+      item_2 = create(:item, merchant_id: merchant_2.id)
+      item_3 = create(:item, merchant_id: merchant_1.id)
+      item_4 = create(:item, merchant_id: merchant_2.id)
+      item_5 = create(:item, merchant_id: merchant_3.id)
+
+      get "/api/v1/items/find_all?merchant_id=#{item_1.merchant_id}"
+
+      filtered_items = JSON.parse(response.body)
+      expect(response).to be_successful
+      expect(filtered_items.count).to eq(2)
+      expect(filtered_items.first["merchant_id"]).to eq(item_1.merchant_id)
+      expect(filtered_items.last["merchant_id"]).to eq(item_1.merchant_id)
+    end
+    
+    xit "finds a all items by created_at" do
+      merchant = create(:merchant)
+      item_1 = create(:item, merchant_id: merchant.id, created_at: "2018-01-01")
+      item_2 = create(:item, merchant_id: merchant.id, created_at: "2018-01-02")
+      item_3 = create(:item, merchant_id: merchant.id, created_at: "2018-01-01")
+      item_4 = create(:item, merchant_id: merchant.id, created_at: "2018-01-03")
+      item_5 = create(:item, merchant_id: merchant.id, created_at: "2018-01-04")
+
+      get "/api/v1/items/find_all?created_at=#{item_1.created_at}"
+
+      filtered_items = JSON.parse(response.body)
+      expect(response).to be_successful
+      expect(filtered_items.count).to eq(2)
+      expect(filtered_items.first["created_at"]).to eq(item_1.created_at)
+      expect(filtered_items.last["created_at"]).to eq(item_1.created_at)
+    end
+    
+    xit "finds a all items by updated_at" do
+      merchant = create(:merchant)
+      item_1 = create(:item, merchant_id: merchant.id, updated_at: "2018-01-01")
+      item_2 = create(:item, merchant_id: merchant.id, updated_at: "2018-01-02")
+      item_3 = create(:item, merchant_id: merchant.id, updated_at: "2018-01-01")
+      item_4 = create(:item, merchant_id: merchant.id, updated_at: "2018-01-03")
+      item_5 = create(:item, merchant_id: merchant.id, updated_at: "2018-01-04")
+
+      get "/api/v1/items/find_all?updated_at=#{item_1.updated_at}"
+
+      filtered_items = JSON.parse(response.body)
+      expect(response).to be_successful
+      expect(filtered_items.count).to eq(2)
+      expect(filtered_items.first["updated_at"]).to eq(item_1.updated_at)
+      expect(filtered_items.last["updated_at"]).to eq(item_1.updated_at)
+    end
+    
   end
-
 end
