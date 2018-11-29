@@ -44,11 +44,11 @@ describe "Merchants with most revenue API" do
     top_merchants = JSON.parse(response.body)
     expect(response).to be_successful
     expect(top_merchants).to eq([
-      { "id"=>merchant_6.id, "name"=>merchant_6.name, "total_revenue"=>"10000.0" }, 
-      { "id"=>merchant_4.id, "name"=>merchant_4.name, "total_revenue"=>"200.0" }, 
-      { "id"=>merchant_2.id, "name"=>merchant_2.name, "total_revenue"=>"100.0" }, 
-      { "id"=>merchant_5.id, "name"=>merchant_5.name, "total_revenue"=>"3.0" }, 
-      { "id"=>merchant_1.id, "name"=>merchant_1.name, "total_revenue"=>"2.0" }
+      { "id"=>merchant_6.id, "name"=>merchant_6.name, "total_revenue"=>10000.0 }, 
+      { "id"=>merchant_4.id, "name"=>merchant_4.name, "total_revenue"=>200.0 }, 
+      { "id"=>merchant_2.id, "name"=>merchant_2.name, "total_revenue"=>100.0 }, 
+      { "id"=>merchant_5.id, "name"=>merchant_5.name, "total_revenue"=>3.0 }, 
+      { "id"=>merchant_1.id, "name"=>merchant_1.name, "total_revenue"=>2.0 }
     ])
   end
 end
