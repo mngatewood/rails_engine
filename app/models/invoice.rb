@@ -10,4 +10,11 @@ class Invoice < ApplicationRecord
   has_many :items, through: :invoice_items
   has_many :transactions
 
+  def self.total_revenue(date)
+    Invoice.select("SUM(invoice_items.unit_price*invoice_items.quantity) AS total_revenue")
+           .joins(:transactions, :invoice_items)
+           .where("transactions.result = ?", "success")
+           .where("invoices.created_at = ?", date)
+  end
+
 end

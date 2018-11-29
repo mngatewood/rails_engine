@@ -1,7 +1,8 @@
 class Api::V1::Merchants::RevenueController < ApplicationController
 
   def show
-    render json: Merchant.total_revenue(params[:date])
+    render json: Invoice.total_revenue(params[:date]), 
+      each_serializer: MerchantRevenueSerializer
   end
 
   private
