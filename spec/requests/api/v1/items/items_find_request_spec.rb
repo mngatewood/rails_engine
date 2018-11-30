@@ -67,7 +67,8 @@ describe "Items finders" do
       merchant = create(:merchant)
       items = create_list(:item, 3, merchant_id: merchant.id)
 
-      get "/api/v1/items/find?created_at=#{items.first.created_at}"
+      created_at = URI.encode(items.first.created_at.to_formatted_s(:db))
+      get "/api/v1/items/find?created_at=#{created_at}"
 
       item = JSON.parse(response.body)
       expect(response).to be_successful
@@ -78,7 +79,8 @@ describe "Items finders" do
       merchant = create(:merchant)
       items = create_list(:item, 3, merchant_id: merchant.id)
 
-      get "/api/v1/items/find?updated_at=#{items.first.updated_at}"
+      updated_at = URI.encode(items.first.updated_at.to_formatted_s(:db))
+      get "/api/v1/items/find?updated_at=#{updated_at}"
 
       item = JSON.parse(response.body)
       expect(response).to be_successful

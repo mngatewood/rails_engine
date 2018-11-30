@@ -16,6 +16,9 @@ Rails.application.routes.draw do
         get '/find', to: 'find#show'
         get '/find_all', to: 'find#index'
         get '/random', to: 'random#show'
+        get '/most_revenue', to: 'most_revenue#index'
+        get '/most_items', to: 'most_items#index'
+        get '/:id/best_day', to: 'best_day#show'
       end
 
       namespace :customers do

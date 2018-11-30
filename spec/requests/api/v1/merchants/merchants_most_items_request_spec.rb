@@ -43,12 +43,10 @@ describe "Merchants with most items sold API" do
 
     top_merchants = JSON.parse(response.body)
     expect(response).to be_successful
-    expect(top_merchants).to eq([
-      { "id"=>merchant_2.id, "name"=>merchant_2.name, "items_sold"=>200 }, 
-      { "id"=>merchant_6.id, "name"=>merchant_6.name, "items_sold"=>100 }, 
-      { "id"=>merchant_1.id, "name"=>merchant_1.name, "items_sold"=>5 }, 
-      { "id"=>merchant_5.id, "name"=>merchant_5.name, "items_sold"=>3 }, 
-      { "id"=>merchant_4.id, "name"=>merchant_4.name, "items_sold"=>2 }
-    ])
+    expect(top_merchants.map{|m|m["id"]}).to eq([ merchant_2.id, 
+                                                  merchant_6.id,
+                                                  merchant_1.id,
+                                                  merchant_5.id,
+                                                  merchant_4.id ])
   end
 end

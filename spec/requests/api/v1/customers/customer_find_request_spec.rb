@@ -123,6 +123,7 @@ describe 'Customer finders' do
       customer_4 = create(:customer, updated_at: "2018-01-03")
       customer_5 = create(:customer, updated_at: "2018-01-04")
 
+
       updated_at = URI.encode(customer_1.updated_at.to_formatted_s(:db))
       get "/api/v1/customers/find_all?updated_at=#{customer_1.updated_at}"
 
