@@ -99,36 +99,38 @@ describe 'Customer finders' do
       expect(filtered_customers.last["last_name"]).to eq(customer_1.last_name)
     end
     
-    xit "finds a all customers by created_at" do
+    it "finds a all customers by created_at" do
       customer_1 = create(:customer, created_at: "2018-01-01")
       customer_2 = create(:customer, created_at: "2018-01-02")
       customer_3 = create(:customer, created_at: "2018-01-01")
       customer_4 = create(:customer, created_at: "2018-01-03")
       customer_5 = create(:customer, created_at: "2018-01-04")
 
-      get "/api/v1/customers/find_all?created_at=#{customer_1.created_at}"
+      created_at = URI.encode(customer_1.created_at.to_formatted_s(:db))
+      get "/api/v1/customers/find_all?created_at=#{created_at}"
 
       filtered_customers = JSON.parse(response.body)
       expect(response).to be_successful
       expect(filtered_customers.count).to eq(2)
-      expect(filtered_customers.first["created_at"]).to eq(customer_1.created_at)
-      expect(filtered_customers.last["created_at"]).to eq(customer_1.created_at)
+      expect(filtered_customers.first["id"]).to eq(customer_1.id)
+      expect(filtered_customers.last["id"]).to eq(customer_3.id)
     end
     
-    xit "finds a all customers by updated_at" do
+    it "finds a all customers by updated_at" do
       customer_1 = create(:customer, updated_at: "2018-01-01")
       customer_2 = create(:customer, updated_at: "2018-01-02")
       customer_3 = create(:customer, updated_at: "2018-01-01")
       customer_4 = create(:customer, updated_at: "2018-01-03")
       customer_5 = create(:customer, updated_at: "2018-01-04")
 
+      created_at = URI.encode(customer_1.created_at.to_formatted_s(:db))
       get "/api/v1/customers/find_all?updated_at=#{customer_1.updated_at}"
 
       filtered_customers = JSON.parse(response.body)
       expect(response).to be_successful
       expect(filtered_customers.count).to eq(2)
-      expect(filtered_customers.first["updated_at"]).to eq(customer_1.updated_at)
-      expect(filtered_customers.last["updated_at"]).to eq(customer_1.updated_at)
+      expect(filtered_customers.first["id"]).to eq(customer_1.id)
+      expect(filtered_customers.last["id"]).to eq(customer_3.id)
     end
     
   end
