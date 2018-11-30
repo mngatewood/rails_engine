@@ -17,4 +17,15 @@ class Invoice < ApplicationRecord
            .where("invoices.created_at = ?", date)
   end
 
+  def self.best_day(item_id)
+    Invoice.select("invoices.created_at::DATE AS date, SUM(invoice_items.quantity) AS sales")
+           .joins(:invoice_items, :transactions, :items)
+           .where(transactions: { result: 'success' })
+           .where(items: {id: item_id})
+           .group(:date)
+           .order("sales desc, date desc")
+           .limit(1)
+           .first
+  end
+
 end
