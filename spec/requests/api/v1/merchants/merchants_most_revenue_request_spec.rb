@@ -48,5 +48,6 @@ describe "Merchants with most revenue API" do
                                                   merchant_2.id, 
                                                   merchant_5.id, 
                                                   merchant_1.id ])
+
   end
 end

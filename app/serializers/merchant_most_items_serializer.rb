@@ -1,3 +1,3 @@
 class MerchantMostItemsSerializer < ActiveModel::Serializer
-  attributes :items_sold, :id, :name
+  attributes :id, :name, :items_sold
 end

@@ -26,21 +26,23 @@ describe "Merchants finders" do
     xit "finds a single merchant by created_at" do
       merchants = create_list(:merchant, 3)
 
-      get "/api/v1/merchants/find?created_at=#{merchants.first.created_at}"
+      created_at = URI.encode(merchants.first.created_at.to_formatted_s(:db))
+      get "/api/v1/merchants/find?created_at=#{created_at}"
 
       merchant = JSON.parse(response.body)
       expect(response).to be_successful
-      expect(merchant["created_at"]).to eq(merchants.first.created_at)
+      expect(merchant["id"]).to eq(merchants.first.id)
     end
 
     xit "finds a single merchant by updated_at" do
       merchants = create_list(:merchant, 3)
 
-      get "/api/v1/merchants/find?updated_at=#{merchants.first.updated_at}"
+      updated_at = URI.encode(merchants.first.updated_at.to_formatted_s(:db))
+      get "/api/v1/merchants/find?updated_at=#{updated_at}"
 
       merchant = JSON.parse(response.body)
       expect(response).to be_successful
-      expect(merchant["updated_at"]).to eq(merchants.first.updated_at)
+      expect(merchant["id"]).to eq(merchants.first.id)
     end
 
   end

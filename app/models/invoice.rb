@@ -15,6 +15,7 @@ class Invoice < ApplicationRecord
            .joins(:transactions, :invoice_items)
            .where("transactions.result = ?", "success")
            .where("invoices.created_at = ?", date)
+           .to_a.first.total_revenue.to_f.round(2)
   end
 
   def self.best_day(item_id)

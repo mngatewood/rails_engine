@@ -1,4 +1,5 @@
 require "rails_helper"
+require "URI"
 
 describe "Items finders" do
   describe "single finders" do
