@@ -23,4 +23,19 @@ class Merchant < ApplicationRecord
             .limit(limit)
   end
 
+  def self.total_revenue(merchant_id)
+    Merchant.select("SUM(invoice_items.unit_price*invoice_items.quantity)::FLOAT AS total_revenue")
+            .joins(invoices: [:invoice_items, :transactions])
+            .where(transactions: { result: 'success' })
+            .where(merchants: { id: merchant_id})
+  end
+
+  def self.total_revenue_for_date(merchant_id, date)
+    Merchant.select("SUM(invoice_items.unit_price*invoice_items.quantity)::FLOAT AS total_revenue")
+            .joins(invoices: [:invoice_items, :transactions])
+            .where(transactions: { result: 'success' })
+            .where(merchants: { id: merchant_id})
+            .where("invoices.created_at::DATE = ?", date[0..9])
+  end
+
 end
