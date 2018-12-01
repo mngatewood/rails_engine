@@ -8,9 +8,9 @@ describe "Merchants finders" do
 
       get "/api/v1/merchants/find?id=#{merchants.first.id}"
 
-      merchant = JSON.parse(response.body)
+      merchant = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(merchant["id"]).to eq(merchants.first.id)
+      expect(merchant["attributes"]["id"].to_i).to eq(merchants.first.id)
     end
     
     it "finds a single merchant by name" do
@@ -18,9 +18,9 @@ describe "Merchants finders" do
 
       get "/api/v1/merchants/find?name=#{merchants.first.name}"
 
-      merchant = JSON.parse(response.body)
+      merchant = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(merchant["name"]).to eq(merchants.first.name)
+      expect(merchant["attributes"]["name"]).to eq(merchants.first.name)
     end
 
     xit "finds a single merchant by created_at" do
@@ -29,9 +29,9 @@ describe "Merchants finders" do
       created_at = URI.encode(merchants.first.created_at.to_formatted_s(:db))
       get "/api/v1/merchants/find?created_at=#{created_at}"
 
-      merchant = JSON.parse(response.body)
+      merchant = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(merchant["id"]).to eq(merchants.first.id)
+      expect(merchant["attributes"]["id"].to_i).to eq(merchants.first.id)
     end
 
     xit "finds a single merchant by updated_at" do
@@ -40,9 +40,9 @@ describe "Merchants finders" do
       updated_at = URI.encode(merchants.first.updated_at.to_formatted_s(:db))
       get "/api/v1/merchants/find?updated_at=#{updated_at}"
 
-      merchant = JSON.parse(response.body)
+      merchant = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(merchant["id"]).to eq(merchants.first.id)
+      expect(merchant["attributes"]["id"].to_i).to eq(merchants.first.id)
     end
 
   end
@@ -54,9 +54,9 @@ describe "Merchants finders" do
 
       get "/api/v1/merchants/find_all?id=#{merchants.first.id}"
 
-      filtered_merchants = JSON.parse(response.body)
+      filtered_merchants = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(filtered_merchants.first["id"]).to eq(merchants.first.id)
+      expect(filtered_merchants.first["attributes"]["id"].to_i).to eq(merchants.first.id)
     end
     
     it "finds all merchants by name" do
@@ -68,11 +68,11 @@ describe "Merchants finders" do
 
       get "/api/v1/merchants/find_all?name=#{merchant_1.name}"
 
-      filtered_merchants = JSON.parse(response.body)
+      filtered_merchants = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_merchants.count).to eq(2)
-      expect(filtered_merchants.first["name"]).to eq(merchant_1.name)
-      expect(filtered_merchants.last["name"]).to eq(merchant_1.name)
+      expect(filtered_merchants.first["attributes"]["name"]).to eq(merchant_1.name)
+      expect(filtered_merchants.last["attributes"]["name"]).to eq(merchant_1.name)
     end
     
     it "finds a all merchants by created_at" do
@@ -85,11 +85,11 @@ describe "Merchants finders" do
       created_at = URI.encode(merchant_1.created_at.to_formatted_s(:db))
       get "/api/v1/merchants/find_all?created_at=#{created_at}"
 
-      filtered_merchants = JSON.parse(response.body)
+      filtered_merchants = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_merchants.count).to eq(2)
-      expect(filtered_merchants.first["id"]).to eq(merchant_1.id)
-      expect(filtered_merchants.last["id"]).to eq(merchant_3.id)
+      expect(filtered_merchants.first["attributes"]["id"].to_i).to eq(merchant_1.id)
+      expect(filtered_merchants.last["attributes"]["id"].to_i).to eq(merchant_3.id)
     end
     
     it "finds a all merchants by updated_at" do
@@ -102,13 +102,12 @@ describe "Merchants finders" do
       updated_at = URI.encode(merchant_1.updated_at.to_formatted_s(:db))
       get "/api/v1/merchants/find_all?updated_at=#{updated_at}"
 
-      filtered_merchants = JSON.parse(response.body)
+      filtered_merchants = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_merchants.count).to eq(2)
-      expect(filtered_merchants.first["id"]).to eq(merchant_1.id)
-      expect(filtered_merchants.last["id"]).to eq(merchant_3.id)
+      expect(filtered_merchants.first["attributes"]["id"].to_i).to eq(merchant_1.id)
+      expect(filtered_merchants.last["attributes"]["id"].to_i).to eq(merchant_3.id)
     end
     
   end
-
 end

@@ -8,9 +8,9 @@ describe "Merchants finders" do
 
       get "/api/v1/merchants/random"
 
-      merchant = JSON.parse(response.body)
+      merchant = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(merchant["id"]).to be_between(merchants.first.id, merchants.last.id)
+      expect(merchant["id"].to_i).to be_between(merchants.first.id, merchants.last.id)
     end
 
   end
