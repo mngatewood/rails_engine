@@ -10,7 +10,7 @@ describe "Items finders" do
 
       get "/api/v1/items/find?id=#{items.first.id}"
 
-      item = JSON.parse(response.body)
+      item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(item["id"]).to eq(items.first.id)
     end
@@ -21,7 +21,7 @@ describe "Items finders" do
 
       get "/api/v1/items/find?name=#{items.first.name}"
 
-      item = JSON.parse(response.body)
+      item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(item["name"]).to eq(items.first.name)
     end
@@ -32,7 +32,7 @@ describe "Items finders" do
 
       get "/api/v1/items/find?description=#{items.first.description}"
 
-      item = JSON.parse(response.body)
+      item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(item["id"]).to eq(items.first.id)
     end
@@ -43,7 +43,7 @@ describe "Items finders" do
 
       get "/api/v1/items/find?unit_price=#{items.first.unit_price}"
 
-      item = JSON.parse(response.body)
+      item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(item["id"].to_f).to eq(items.first.id)
     end
@@ -58,7 +58,7 @@ describe "Items finders" do
 
       get "/api/v1/items/find?merchant_id=#{item_1.merchant_id}"
 
-      item = JSON.parse(response.body)
+      item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(item["id"]).to eq(item_1.id)
     end
@@ -70,7 +70,7 @@ describe "Items finders" do
       created_at = URI.encode(items.first.created_at.to_formatted_s(:db))
       get "/api/v1/items/find?created_at=#{created_at}"
 
-      item = JSON.parse(response.body)
+      item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(item["id"]).to eq(items.first.id)
     end
@@ -82,7 +82,7 @@ describe "Items finders" do
       updated_at = URI.encode(items.first.updated_at.to_formatted_s(:db))
       get "/api/v1/items/find?updated_at=#{updated_at}"
 
-      item = JSON.parse(response.body)
+      item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(item["id"]).to eq(items.first.id)
     end
@@ -97,7 +97,7 @@ describe "Items finders" do
 
       get "/api/v1/items/find_all?id=#{items.first.id}"
 
-      filtered_items = JSON.parse(response.body)
+      filtered_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_items.first["id"]).to eq(items.first.id)
     end
@@ -112,7 +112,7 @@ describe "Items finders" do
 
       get "/api/v1/items/find_all?name=#{item_1.name}"
 
-      filtered_items = JSON.parse(response.body)
+      filtered_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_items.count).to eq(2)
       expect(filtered_items.first["name"]).to eq(item_1.name)
@@ -130,7 +130,7 @@ describe "Items finders" do
       description = URI.encode(item_1.description)
       get "/api/v1/items/find_all?description=#{description}"
 
-      filtered_items = JSON.parse(response.body)
+      filtered_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_items.count).to eq(2)
       expect(filtered_items.first["description"]).to eq(item_1.description)
@@ -148,7 +148,7 @@ describe "Items finders" do
       unit_price = URI.encode(item_1.unit_price.to_s)
       get "/api/v1/items/find_all?unit_price=#{unit_price}"
 
-      filtered_items = JSON.parse(response.body)
+      filtered_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_items.count).to eq(2)
       expect(filtered_items.first["unit_price"]).to eq(item_1.unit_price.to_s)
@@ -167,7 +167,7 @@ describe "Items finders" do
 
       get "/api/v1/items/find_all?merchant_id=#{item_1.merchant_id}"
 
-      filtered_items = JSON.parse(response.body)
+      filtered_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_items.count).to eq(2)
       expect(filtered_items.first["id"]).to eq(item_1.id)
@@ -185,7 +185,7 @@ describe "Items finders" do
       created_at = URI.encode(item_1.created_at.to_formatted_s(:db))
       get "/api/v1/items/find_all?created_at=#{created_at}"
 
-      filtered_items = JSON.parse(response.body)
+      filtered_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_items.count).to eq(2)
       expect(filtered_items.first["id"]).to eq(item_1.id)
@@ -203,7 +203,7 @@ describe "Items finders" do
       updated_at = URI.encode(item_1.updated_at.to_formatted_s(:db))
       get "/api/v1/items/find_all?updated_at=#{updated_at}"
 
-      filtered_items = JSON.parse(response.body)
+      filtered_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_items.count).to eq(2)
       expect(filtered_items.first["id"]).to eq(item_1.id)

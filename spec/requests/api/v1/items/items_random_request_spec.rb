@@ -9,7 +9,7 @@ describe "Items finders" do
 
       get "/api/v1/items/random"
 
-      item = JSON.parse(response.body)
+      item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(item["id"]).to be_between(items.first.id, items.last.id)
     end

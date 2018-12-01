@@ -8,7 +8,7 @@ describe "Customers finders" do
 
       get "/api/v1/customers/random"
 
-      customer = JSON.parse(response.body)
+      customer = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(customer["id"]).to be_between(customers.first.id, customers.last.id)
     end

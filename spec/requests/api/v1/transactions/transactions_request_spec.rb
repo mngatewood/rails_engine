@@ -10,7 +10,7 @@ describe "Transactions API" do
 
     get "/api/v1/transactions"
 
-    transactions = JSON.parse(response.body)
+    transactions = JSON.parse(response.body)["data"]
     expect(response).to be_successful
     expect(transactions.count).to eq(3)
   end
@@ -23,7 +23,7 @@ describe "Transactions API" do
 
     get "/api/v1/transactions/#{id}"
 
-    transaction = JSON.parse(response.body)
+    transaction = JSON.parse(response.body)["data"]
     expect(response).to be_successful
     expect(transaction["id"]).to eq(id)
   end

@@ -8,7 +8,7 @@ describe 'Customer finders' do
 
       get "/api/v1/customers/find?id=#{customers.first.id}"
 
-      customer = JSON.parse(response.body)
+      customer = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(customer["id"]).to eq(customers.first.id)
     end
@@ -18,7 +18,7 @@ describe 'Customer finders' do
 
       get "/api/v1/customers/find?first_name=#{customers.first.first_name}"
 
-      customer = JSON.parse(response.body)
+      customer = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(customer["first_name"]).to eq(customers.first.first_name)
     end
@@ -28,7 +28,7 @@ describe 'Customer finders' do
 
       get "/api/v1/customers/find?last_name=#{customers.first.last_name}"
 
-      customer = JSON.parse(response.body)
+      customer = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(customer["last_name"]).to eq(customers.first.last_name)
     end
@@ -38,7 +38,7 @@ describe 'Customer finders' do
 
       get "/api/v1/customers/find?created_at=#{customers.first.created_at}"
 
-      customer = JSON.parse(response.body)
+      customer = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(customer["created_at"]).to eq(customers.first.created_at)
     end
@@ -48,7 +48,7 @@ describe 'Customer finders' do
 
       get "/api/v1/customers/find?updated_at=#{customers.first.updated_at}"
 
-      customer = JSON.parse(response.body)
+      customer = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(customer["updated_at"]).to eq(customers.first.updated_at)
     end
@@ -62,7 +62,7 @@ describe 'Customer finders' do
 
       get "/api/v1/customers/find_all?id=#{customers.first.id}"
 
-      filtered_customers = JSON.parse(response.body)
+      filtered_customers = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_customers.first["id"]).to eq(customers.first.id)
     end
@@ -76,7 +76,7 @@ describe 'Customer finders' do
 
       get "/api/v1/customers/find_all?first_name=#{customer_1.first_name}"
 
-      filtered_customers = JSON.parse(response.body)
+      filtered_customers = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_customers.count).to eq(2)
       expect(filtered_customers.first["first_name"]).to eq(customer_1.first_name)
@@ -92,7 +92,7 @@ describe 'Customer finders' do
 
       get "/api/v1/customers/find_all?last_name=#{customer_1.last_name}"
 
-      filtered_customers = JSON.parse(response.body)
+      filtered_customers = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_customers.count).to eq(2)
       expect(filtered_customers.first["last_name"]).to eq(customer_1.last_name)
@@ -109,7 +109,7 @@ describe 'Customer finders' do
       created_at = URI.encode(customer_1.created_at.to_formatted_s(:db))
       get "/api/v1/customers/find_all?created_at=#{created_at}"
 
-      filtered_customers = JSON.parse(response.body)
+      filtered_customers = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_customers.count).to eq(2)
       expect(filtered_customers.first["id"]).to eq(customer_1.id)
@@ -127,7 +127,7 @@ describe 'Customer finders' do
       updated_at = URI.encode(customer_1.updated_at.to_formatted_s(:db))
       get "/api/v1/customers/find_all?updated_at=#{customer_1.updated_at}"
 
-      filtered_customers = JSON.parse(response.body)
+      filtered_customers = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_customers.count).to eq(2)
       expect(filtered_customers.first["id"]).to eq(customer_1.id)

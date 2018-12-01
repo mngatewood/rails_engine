@@ -26,7 +26,7 @@ describe "Items best day API" do
 
     get "/api/v1/items/#{item.id}/best_day"
 
-    best_day = JSON.parse(response.body)
+    best_day = JSON.parse(response.body)["data"]
     expect(response).to be_successful
     expect(best_day["date"]).to eq(invoice_5.created_at.strftime("%F"))
   end

@@ -41,9 +41,9 @@ describe "Merchants with most items sold API" do
 
     get "/api/v1/merchants/most_items?quantity=5"
 
-    top_merchants = JSON.parse(response.body)
+    top_merchants = JSON.parse(response.body)["data"]
     expect(response).to be_successful
-    expect(top_merchants.map{|m|m["id"]}).to eq([ merchant_2.id, 
+    expect(top_merchants.map{|m|m["id"].to_i}).to eq([ merchant_2.id, 
                                                   merchant_6.id,
                                                   merchant_1.id,
                                                   merchant_5.id,

@@ -27,7 +27,7 @@ describe "Items most revenue API" do
 
     get "/api/v1/items/most_revenue?quantity=3"
 
-    items = JSON.parse(response.body)
+    items = JSON.parse(response.body)["data"]
     expect(response).to be_successful
     expect(items.map{|i|i["id"]}).to eq([item_3.id, item_4.id, item_2.id])
   end
