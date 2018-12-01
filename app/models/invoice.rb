@@ -18,6 +18,24 @@ class Invoice < ApplicationRecord
            .to_a.first
   end
 
+  def self.top_invoices_by_revenue(limit)
+    Invoice.select("invoices.*, SUM(invoice_items.unit_price*invoice_items.quantity)::FLOAT AS total_revenue")
+            .joins(:invoice_items, :transactions)
+            .where("transactions.result = ?", "success")
+            .group(:id)
+            .order("total_revenue desc")
+            .limit(limit)
+  end
+
+  def self.top_invoices_by_items_sold(limit)
+    Invoice.select("invoices.*, invoice_items.quantity AS items_sold")
+            .joins(:invoice_items, :transactions)
+            .where("transactions.result = ?", "success")
+            .group(:id, :items_sold)
+            .order("items_sold desc")
+            .limit(limit)
+  end
+
   def self.best_day(item_id)
     Invoice.select("invoices.created_at::DATE AS date, SUM(invoice_items.quantity) AS sales")
            .joins(:invoice_items, :transactions, :items)
