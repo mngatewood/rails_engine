@@ -7,7 +7,7 @@ describe "Invoices finders" do
     it "finds a single invoice by id" do
       merchant = create(:merchant)
       customer = create(:customer)
-      invoices = create_list(:invoice, 3, merchant_id: merchant.id, customer_id: customer.id)
+      invoices = create_list(:invoice, 3, merchant: merchant, customer: customer)
 
       get "/api/v1/invoices/find?id=#{invoices.first.id}"
 
@@ -19,8 +19,8 @@ describe "Invoices finders" do
     it "finds a single invoice by status" do
       merchant = create(:merchant)
       customer = create(:customer)
-      invoice_1 = create(:invoice, status: 'pending', merchant_id: merchant.id, customer_id: customer.id)
-      invoices = create_list(:invoice, 3, merchant_id: merchant.id, customer_id: customer.id)
+      invoice_1 = create(:invoice, status: 'pending', merchant: merchant, customer: customer)
+      invoices = create_list(:invoice, 3, merchant: merchant, customer: customer)
 
       get "/api/v1/invoices/find?name=#{invoice_1.status}"
 
@@ -33,8 +33,8 @@ describe "Invoices finders" do
       customer = create(:customer)
       merchant_1 = create(:merchant)
       merchant_2 = create(:merchant)
-      invoice_1 = create(:invoice, merchant_id: merchant_1.id, customer_id: customer.id)
-      invoices = create_list(:invoice, 3, merchant_id: merchant_2.id, customer_id: customer.id)
+      invoice_1 = create(:invoice, merchant: merchant_1, customer: customer)
+      invoices = create_list(:invoice, 3, merchant: merchant_2, customer: customer)
 
       get "/api/v1/invoices/find?merchant_id=#{invoice_1.merchant_id}"
 
@@ -47,8 +47,8 @@ describe "Invoices finders" do
       customer_1 = create(:customer)
       customer_2 = create(:customer)
       merchant = create(:merchant)
-      invoice_1 = create(:invoice, merchant_id: merchant.id, customer_id: customer_1.id)
-      invoices = create_list(:invoice, 3, merchant_id: merchant.id, customer_id: customer_2.id)
+      invoice_1 = create(:invoice, merchant: merchant, customer: customer_1)
+      invoices = create_list(:invoice, 3, merchant: merchant, customer: customer_2)
 
       get "/api/v1/invoices/find?customer_id=#{invoice_1.customer_id}"
 
@@ -60,8 +60,8 @@ describe "Invoices finders" do
     it "finds a single invoice by created_at" do
       merchant = create(:merchant)
       customer = create(:customer)
-      invoice_1 = create(:invoice, created_at: "2018-01-01T11:11:11.000Z", merchant_id: merchant.id, customer_id: customer.id)
-      invoices = create_list(:invoice, 3, merchant_id: merchant.id, customer_id: customer.id)
+      invoice_1 = create(:invoice, created_at: "2018-01-01T11:11:11.000Z", merchant: merchant, customer: customer)
+      invoices = create_list(:invoice, 3, merchant: merchant, customer: customer)
 
       get "/api/v1/invoices/find?created_at=#{invoice_1.created_at}"
 
@@ -73,8 +73,8 @@ describe "Invoices finders" do
     it "finds a single invoice by updated_at" do
       merchant = create(:merchant)
       customer = create(:customer)
-      invoice_1 = create(:invoice, updated_at: "2018-01-01T11:11:11.000Z", merchant_id: merchant.id, customer_id: customer.id)
-      invoices = create_list(:invoice, 3, merchant_id: merchant.id, customer_id: customer.id)
+      invoice_1 = create(:invoice, updated_at: "2018-01-01T11:11:11.000Z", merchant: merchant, customer: customer)
+      invoices = create_list(:invoice, 3, merchant: merchant, customer: customer)
 
       get "/api/v1/invoices/find?updated_at=#{invoice_1.updated_at}"
 
@@ -90,7 +90,7 @@ describe "Invoices finders" do
     it "finds all invoices by id" do
       merchant = create(:merchant)
       customer = create(:customer)
-      invoices = create_list(:invoice, 3, merchant_id: merchant.id, customer_id: customer.id)
+      invoices = create_list(:invoice, 3, merchant: merchant, customer: customer)
 
       get "/api/v1/invoices/find_all?id=#{invoices.first.id}"
 
@@ -103,8 +103,8 @@ describe "Invoices finders" do
     it "finds all invoices by status" do
       merchant = create(:merchant)
       customer = create(:customer)
-      invoice_1 = create(:invoice, status: 'pending', merchant_id: merchant.id, customer_id: customer.id)
-      invoices = create_list(:invoice, 3, merchant_id: merchant.id, customer_id: customer.id)
+      invoice_1 = create(:invoice, status: 'pending', merchant: merchant, customer: customer)
+      invoices = create_list(:invoice, 3, merchant: merchant, customer: customer)
 
       get "/api/v1/invoices/find_all?status=#{invoices.first.status}"
 
@@ -118,8 +118,8 @@ describe "Invoices finders" do
       customer = create(:customer)
       merchant_1 = create(:merchant)
       merchant_2 = create(:merchant)
-      invoice_1 = create(:invoice, merchant_id: merchant_1.id, customer_id: customer.id)
-      invoices = create_list(:invoice, 3, merchant_id: merchant_2.id, customer_id: customer.id)
+      invoice_1 = create(:invoice, merchant: merchant_1, customer: customer)
+      invoices = create_list(:invoice, 3, merchant: merchant_2, customer: customer)
 
       get "/api/v1/invoices/find_all?merchant_id=#{invoices.first.merchant_id}"
 
@@ -133,8 +133,8 @@ describe "Invoices finders" do
       customer_1 = create(:customer)
       customer_2 = create(:customer)
       merchant = create(:merchant)
-      invoice_1 = create(:invoice, merchant_id: merchant.id, customer_id: customer_1.id)
-      invoices = create_list(:invoice, 3, merchant_id: merchant.id, customer_id: customer_2.id)
+      invoice_1 = create(:invoice, merchant: merchant, customer: customer_1)
+      invoices = create_list(:invoice, 3, merchant: merchant, customer: customer_2)
 
       get "/api/v1/invoices/find_all?customer_id=#{invoices.first.customer_id}"
 
@@ -147,10 +147,10 @@ describe "Invoices finders" do
     it "finds all invoices by created_at" do
       merchant = create(:merchant)
       customer = create(:customer)
-      invoice_1 = create(:invoice, created_at: "2018-01-01T11:11:11.000Z", merchant_id: merchant.id, customer_id: customer.id)
-      invoice_2 = create(:invoice, created_at: "2018-01-02T11:11:11.000Z", merchant_id: merchant.id, customer_id: customer.id)
-      invoice_3 = create(:invoice, created_at: "2018-01-02T11:11:11.000Z", merchant_id: merchant.id, customer_id: customer.id)
-      invoice_4 = create(:invoice, created_at: "2018-01-02T11:11:11.000Z", merchant_id: merchant.id, customer_id: customer.id)
+      invoice_1 = create(:invoice, created_at: "2018-01-01T11:11:11.000Z", merchant: merchant, customer: customer)
+      invoice_2 = create(:invoice, created_at: "2018-01-02T11:11:11.000Z", merchant: merchant, customer: customer)
+      invoice_3 = create(:invoice, created_at: "2018-01-02T11:11:11.000Z", merchant: merchant, customer: customer)
+      invoice_4 = create(:invoice, created_at: "2018-01-02T11:11:11.000Z", merchant: merchant, customer: customer)
 
       get "/api/v1/invoices/find_all?created_at=#{invoice_2.created_at}"
 
@@ -163,10 +163,10 @@ describe "Invoices finders" do
     it "finds all invoices by updated_at" do
       merchant = create(:merchant)
       customer = create(:customer)
-      invoice_1 = create(:invoice, updated_at: "2018-01-01T11:11:11.000Z", merchant_id: merchant.id, customer_id: customer.id)
-      invoice_2 = create(:invoice, updated_at: "2018-01-02T11:11:11.000Z", merchant_id: merchant.id, customer_id: customer.id)
-      invoice_3 = create(:invoice, updated_at: "2018-01-02T11:11:11.000Z", merchant_id: merchant.id, customer_id: customer.id)
-      invoice_4 = create(:invoice, updated_at: "2018-01-02T11:11:11.000Z", merchant_id: merchant.id, customer_id: customer.id)
+      invoice_1 = create(:invoice, updated_at: "2018-01-01T11:11:11.000Z", merchant: merchant, customer: customer)
+      invoice_2 = create(:invoice, updated_at: "2018-01-02T11:11:11.000Z", merchant: merchant, customer: customer)
+      invoice_3 = create(:invoice, updated_at: "2018-01-02T11:11:11.000Z", merchant: merchant, customer: customer)
+      invoice_4 = create(:invoice, updated_at: "2018-01-02T11:11:11.000Z", merchant: merchant, customer: customer)
 
       get "/api/v1/invoices/find_all?updated_at=#{invoice_2.updated_at}"
 

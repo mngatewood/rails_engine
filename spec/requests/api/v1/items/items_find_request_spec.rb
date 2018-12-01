@@ -1,12 +1,11 @@
 require "rails_helper"
-require "URI"
 
 describe "Items finders" do
   describe "single finders" do
 
     it "finds a single item by id" do
     merchant = create(:merchant)
-    items = create_list(:item, 3, merchant_id: merchant.id)
+    items = create_list(:item, 3, merchant: merchant)
 
       get "/api/v1/items/find?id=#{items.first.id}"
 
@@ -17,7 +16,7 @@ describe "Items finders" do
     
     it "finds a single item by name" do
       merchant = create(:merchant)
-      items = create_list(:item, 3, merchant_id: merchant.id)
+      items = create_list(:item, 3, merchant: merchant)
 
       get "/api/v1/items/find?name=#{items.first.name}"
 
@@ -28,7 +27,7 @@ describe "Items finders" do
 
     it "finds a single item by description" do
       merchant = create(:merchant)
-      items = create_list(:item, 3, merchant_id: merchant.id)
+      items = create_list(:item, 3, merchant: merchant)
 
       get "/api/v1/items/find?description=#{items.first.description}"
 
@@ -39,7 +38,7 @@ describe "Items finders" do
 
     it "finds a single item by unit price" do
       merchant = create(:merchant)
-      items = create_list(:item, 3, merchant_id: merchant.id)
+      items = create_list(:item, 3, merchant: merchant)
 
       get "/api/v1/items/find?unit_price=#{items.first.unit_price}"
 
@@ -52,9 +51,9 @@ describe "Items finders" do
       merchant_1 = create(:merchant)
       merchant_2 = create(:merchant)
       merchant_3 = create(:merchant)
-      item_1 = create(:item, merchant_id: merchant_1.id)
-      item_2 = create(:item, merchant_id: merchant_2.id)
-      item_3 = create(:item, merchant_id: merchant_3.id)
+      item_1 = create(:item, merchant: merchant_1)
+      item_2 = create(:item, merchant: merchant_2)
+      item_3 = create(:item, merchant: merchant_3)
 
       get "/api/v1/items/find?merchant_id=#{item_1.merchant_id}"
 
@@ -63,28 +62,28 @@ describe "Items finders" do
       expect(item["id"]).to eq(item_1.id)
     end
 
-    xit "finds a single merchant by created_at" do
+    it "finds a single merchant by created_at" do
       merchant = create(:merchant)
-      items = create_list(:item, 3, merchant_id: merchant.id)
+      item_1 = create(:item, created_at: "2018-01-01T11:11:11.000Z")
+      items = create_list(:item, 3, merchant: merchant)
 
-      created_at = URI.encode(items.first.created_at.to_formatted_s(:db))
-      get "/api/v1/items/find?created_at=#{created_at}"
+      get "/api/v1/items/find?created_at=#{item_1.created_at}"
 
       item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(item["id"]).to eq(items.first.id)
+      expect(item["attributes"]["id"]).to eq(item_1.id)
     end
 
-    xit "finds a single merchant by updated_at" do
+    it "finds a single merchant by updated_at" do
       merchant = create(:merchant)
-      items = create_list(:item, 3, merchant_id: merchant.id)
+      item_1 = create(:item, updated_at: "2018-01-01T11:11:11.000Z")
+      items = create_list(:item, 3, merchant: merchant)
 
-      updated_at = URI.encode(items.first.updated_at.to_formatted_s(:db))
-      get "/api/v1/items/find?updated_at=#{updated_at}"
+      get "/api/v1/items/find?updated_at=#{item_1.updated_at}"
 
       item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(item["id"]).to eq(items.first.id)
+      expect(item["attributes"]["id"]).to eq(item_1.id)
     end
 
   end
@@ -93,7 +92,7 @@ describe "Items finders" do
 
     it "finds all items by id" do
       merchant = create(:merchant)
-      items = create_list(:item, 3, merchant_id: merchant.id)
+      items = create_list(:item, 3, merchant: merchant)
 
       get "/api/v1/items/find_all?id=#{items.first.id}"
 
@@ -104,11 +103,11 @@ describe "Items finders" do
     
     it "finds all items by name" do
       merchant = create(:merchant)
-      item_1 = create(:item, merchant_id: merchant.id, name: "Television")
-      item_2 = create(:item, merchant_id: merchant.id, name: "Speakers")
-      item_3 = create(:item, merchant_id: merchant.id, name: "Television")
-      item_4 = create(:item, merchant_id: merchant.id, name: "Microwave")
-      item_5 = create(:item, merchant_id: merchant.id, name: "Blender")
+      item_1 = create(:item, merchant: merchant, name: "Television")
+      item_2 = create(:item, merchant: merchant, name: "Speakers")
+      item_3 = create(:item, merchant: merchant, name: "Television")
+      item_4 = create(:item, merchant: merchant, name: "Microwave")
+      item_5 = create(:item, merchant: merchant, name: "Blender")
 
       get "/api/v1/items/find_all?name=#{item_1.name}"
 
@@ -121,11 +120,11 @@ describe "Items finders" do
     
     it "finds all items by description" do
       merchant = create(:merchant)
-      item_1 = create(:item, merchant_id: merchant.id, description: "It shows movies")
-      item_2 = create(:item, merchant_id: merchant.id, description: "It plays sound")
-      item_3 = create(:item, merchant_id: merchant.id, description: "It shows movies")
-      item_4 = create(:item, merchant_id: merchant.id, description: "It heats food")
-      item_5 = create(:item, merchant_id: merchant.id, description: "It mixes food")
+      item_1 = create(:item, merchant: merchant, description: "It shows movies")
+      item_2 = create(:item, merchant: merchant, description: "It plays sound")
+      item_3 = create(:item, merchant: merchant, description: "It shows movies")
+      item_4 = create(:item, merchant: merchant, description: "It heats food")
+      item_5 = create(:item, merchant: merchant, description: "It mixes food")
 
       description = URI.encode(item_1.description)
       get "/api/v1/items/find_all?description=#{description}"
@@ -139,11 +138,11 @@ describe "Items finders" do
     
     it "finds all items by unit price" do
       merchant = create(:merchant)
-      item_1 = create(:item, merchant_id: merchant.id, unit_price: 899.00)
-      item_2 = create(:item, merchant_id: merchant.id, unit_price: 199.00)
-      item_3 = create(:item, merchant_id: merchant.id, unit_price: 899.00)
-      item_4 = create(:item, merchant_id: merchant.id, unit_price: 49.99)
-      item_5 = create(:item, merchant_id: merchant.id, unit_price: 19.99)
+      item_1 = create(:item, merchant: merchant, unit_price: 899.00)
+      item_2 = create(:item, merchant: merchant, unit_price: 199.00)
+      item_3 = create(:item, merchant: merchant, unit_price: 899.00)
+      item_4 = create(:item, merchant: merchant, unit_price: 49.99)
+      item_5 = create(:item, merchant: merchant, unit_price: 19.99)
 
       unit_price = URI.encode(item_1.unit_price.to_s)
       get "/api/v1/items/find_all?unit_price=#{unit_price}"
@@ -176,38 +175,32 @@ describe "Items finders" do
     
     it "finds a all items by created_at" do
       merchant = create(:merchant)
-      item_1 = create(:item, merchant_id: merchant.id, created_at: "2018-01-01")
-      item_2 = create(:item, merchant_id: merchant.id, created_at: "2018-01-02")
-      item_3 = create(:item, merchant_id: merchant.id, created_at: "2018-01-01")
-      item_4 = create(:item, merchant_id: merchant.id, created_at: "2018-01-03")
-      item_5 = create(:item, merchant_id: merchant.id, created_at: "2018-01-04")
+      item_1 = create(:item, merchant: merchant, created_at: "2018-01-01T11:11:11.000Z")
+      item_2 = create(:item, merchant: merchant, created_at: "2018-01-02T11:11:11.000Z")
+      item_3 = create(:item, merchant: merchant, created_at: "2018-01-02T11:11:11.000Z")
+      item_4 = create(:item, merchant: merchant, created_at: "2018-01-02T11:11:11.000Z")
 
-      created_at = URI.encode(item_1.created_at.to_formatted_s(:db))
-      get "/api/v1/items/find_all?created_at=#{created_at}"
+      get "/api/v1/items/find_all?created_at=#{item_2.created_at}"
 
       filtered_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(filtered_items.count).to eq(2)
-      expect(filtered_items.first["id"]).to eq(item_1.id)
-      expect(filtered_items.last["id"]).to eq(item_3.id)
+      expect(filtered_items.count).to eq(3)
+      expect(filtered_items.first["attributes"]["id"]).to eq(item_2.id)
     end
     
     it "finds a all items by updated_at" do
       merchant = create(:merchant)
-      item_1 = create(:item, merchant_id: merchant.id, updated_at: "2018-01-01")
-      item_2 = create(:item, merchant_id: merchant.id, updated_at: "2018-01-02")
-      item_3 = create(:item, merchant_id: merchant.id, updated_at: "2018-01-01")
-      item_4 = create(:item, merchant_id: merchant.id, updated_at: "2018-01-03")
-      item_5 = create(:item, merchant_id: merchant.id, updated_at: "2018-01-04")
+      item_1 = create(:item, merchant: merchant, updated_at: "2018-01-01T11:11:11.000Z")
+      item_2 = create(:item, merchant: merchant, updated_at: "2018-01-02T11:11:11.000Z")
+      item_3 = create(:item, merchant: merchant, updated_at: "2018-01-02T11:11:11.000Z")
+      item_4 = create(:item, merchant: merchant, updated_at: "2018-01-02T11:11:11.000Z")
 
-      updated_at = URI.encode(item_1.updated_at.to_formatted_s(:db))
-      get "/api/v1/items/find_all?updated_at=#{updated_at}"
+      get "/api/v1/items/find_all?updated_at=#{item_2.updated_at}"
 
       filtered_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(filtered_items.count).to eq(2)
-      expect(filtered_items.first["id"]).to eq(item_1.id)
-      expect(filtered_items.last["id"]).to eq(item_3.id)
+      expect(filtered_items.count).to eq(3)
+      expect(filtered_items.first["attributes"]["id"]).to eq(item_2.id)
     end
     
   end

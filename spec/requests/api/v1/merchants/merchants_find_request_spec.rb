@@ -23,26 +23,26 @@ describe "Merchants finders" do
       expect(merchant["attributes"]["name"]).to eq(merchants.first.name)
     end
 
-    xit "finds a single merchant by created_at" do
+    it "finds a single merchant by created_at" do
+      merchant_1 = create(:merchant, created_at: "2018-01-01T11:11:11.000Z")
       merchants = create_list(:merchant, 3)
 
-      created_at = URI.encode(merchants.first.created_at.to_formatted_s(:db))
-      get "/api/v1/merchants/find?created_at=#{created_at}"
+      get "/api/v1/merchants/find?created_at=#{merchant_1.created_at}"
 
       merchant = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(merchant["attributes"]["id"].to_i).to eq(merchants.first.id)
+      expect(merchant["attributes"]["id"].to_i).to eq(merchant_1.id)
     end
 
-    xit "finds a single merchant by updated_at" do
+    it "finds a single merchant by updated_at" do
+      merchant_1 = create(:merchant, updated_at: "2018-01-01T11:11:11.000Z")
       merchants = create_list(:merchant, 3)
 
-      updated_at = URI.encode(merchants.first.updated_at.to_formatted_s(:db))
-      get "/api/v1/merchants/find?updated_at=#{updated_at}"
+      get "/api/v1/merchants/find?updated_at=#{merchant_1.updated_at}"
 
       merchant = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(merchant["attributes"]["id"].to_i).to eq(merchants.first.id)
+      expect(merchant["attributes"]["id"].to_i).to eq(merchant_1.id)
     end
 
   end
@@ -76,37 +76,31 @@ describe "Merchants finders" do
     end
     
     it "finds a all merchants by created_at" do
-      merchant_1 = create(:merchant, created_at: "2018-01-01")
-      merchant_2 = create(:merchant, created_at: "2018-01-02")
-      merchant_3 = create(:merchant, created_at: "2018-01-01")
-      merchant_4 = create(:merchant, created_at: "2018-01-03")
-      merchant_5 = create(:merchant, created_at: "2018-01-04")
+      merchant_1 = create(:merchant, created_at: "2018-01-01T11:11:11.000Z")
+      merchant_2 = create(:merchant, created_at: "2018-01-02T11:11:11.000Z")
+      merchant_3 = create(:merchant, created_at: "2018-01-02T11:11:11.000Z")
+      merchant_4 = create(:merchant, created_at: "2018-01-02T11:11:11.000Z")
 
-      created_at = URI.encode(merchant_1.created_at.to_formatted_s(:db))
-      get "/api/v1/merchants/find_all?created_at=#{created_at}"
+      get "/api/v1/merchants/find_all?created_at=#{merchant_2.created_at}"
 
       filtered_merchants = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(filtered_merchants.count).to eq(2)
-      expect(filtered_merchants.first["attributes"]["id"].to_i).to eq(merchant_1.id)
-      expect(filtered_merchants.last["attributes"]["id"].to_i).to eq(merchant_3.id)
+      expect(filtered_merchants.count).to eq(3)
+      expect(filtered_merchants.first["attributes"]["id"].to_i).to eq(merchant_2.id)
     end
     
     it "finds a all merchants by updated_at" do
-      merchant_1 = create(:merchant, updated_at: "2018-01-01")
-      merchant_2 = create(:merchant, updated_at: "2018-01-02")
-      merchant_3 = create(:merchant, updated_at: "2018-01-01")
-      merchant_4 = create(:merchant, updated_at: "2018-01-03")
-      merchant_5 = create(:merchant, updated_at: "2018-01-04")
+      merchant_1 = create(:merchant, updated_at: "2018-01-01T11:11:11.000Z")
+      merchant_2 = create(:merchant, updated_at: "2018-01-02T11:11:11.000Z")
+      merchant_3 = create(:merchant, updated_at: "2018-01-02T11:11:11.000Z")
+      merchant_4 = create(:merchant, updated_at: "2018-01-02T11:11:11.000Z")
 
-      updated_at = URI.encode(merchant_1.updated_at.to_formatted_s(:db))
-      get "/api/v1/merchants/find_all?updated_at=#{updated_at}"
+      get "/api/v1/merchants/find_all?updated_at=#{merchant_2.updated_at}"
 
       filtered_merchants = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(filtered_merchants.count).to eq(2)
-      expect(filtered_merchants.first["attributes"]["id"].to_i).to eq(merchant_1.id)
-      expect(filtered_merchants.last["attributes"]["id"].to_i).to eq(merchant_3.id)
+      expect(filtered_merchants.count).to eq(3)
+      expect(filtered_merchants.first["attributes"]["id"].to_i).to eq(merchant_2.id)
     end
     
   end
