@@ -22,10 +22,10 @@ describe "Invoice Items API" do
   it "can get an invoice_item by its id" do
     merchant = create(:merchant)
     customer = create(:customer)
-    item = create(:item, merchant_id: merchant.id)
+    item = create(:item, merchant: merchant)
     invoice = create(:invoice, 
-                      merchant_id: merchant.id, 
-                      customer_id: customer.id)
+                      merchant: merchant, 
+                      customer: customer)
     id = create(:invoice_item,
                 invoice_id: invoice.id,
                 item_id: item.id).id
@@ -34,6 +34,6 @@ describe "Invoice Items API" do
 
     invoice_item = JSON.parse(response.body)["data"]
     expect(response).to be_successful
-    expect(invoice_item["id"]).to eq(id)
+    expect(invoice_item["attributes"]["id"].to_i).to eq(id)
   end
 end
