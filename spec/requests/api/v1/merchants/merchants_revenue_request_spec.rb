@@ -38,7 +38,7 @@ describe "Merchants revenue API" do
 
     revenue = JSON.parse(response.body)["data"]
     expect(response).to be_successful
-    expect(revenue["attributes"]["total_revenue"].to_i).to eq(3.0)
+    expect(revenue["attributes"]["total_revenue"].to_f).to eq(3.0)
   end
   
   it "should return the total revenue for that merchant across successful transactions" do
