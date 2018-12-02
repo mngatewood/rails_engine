@@ -8,9 +8,9 @@ describe 'Customer finders' do
 
       get "/api/v1/customers/find?id=#{customers.first.id}"
 
-      customer = JSON.parse(response.body)
+      customer = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(customer["id"]).to eq(customers.first.id)
+      expect(customer["attributes"]["id"]).to eq(customers.first.id)
     end
     
     it "finds a single customer by first name" do
@@ -18,9 +18,9 @@ describe 'Customer finders' do
 
       get "/api/v1/customers/find?first_name=#{customers.first.first_name}"
 
-      customer = JSON.parse(response.body)
+      customer = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(customer["first_name"]).to eq(customers.first.first_name)
+      expect(customer["attributes"]["first_name"]).to eq(customers.first.first_name)
     end
     
     it "finds a single customer by last name" do
@@ -28,29 +28,29 @@ describe 'Customer finders' do
 
       get "/api/v1/customers/find?last_name=#{customers.first.last_name}"
 
-      customer = JSON.parse(response.body)
+      customer = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(customer["last_name"]).to eq(customers.first.last_name)
+      expect(customer["attributes"]["last_name"]).to eq(customers.first.last_name)
     end
     
-    xit "finds a single customer by created_at" do
-      customers = create_list(:customer, 3)
+    it "finds a single customer by created_at" do
+      customers = create_list(:customer, 3, created_at: "2018-01-01T11:11:11.000Z")
 
       get "/api/v1/customers/find?created_at=#{customers.first.created_at}"
 
-      customer = JSON.parse(response.body)
+      customer = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(customer["created_at"]).to eq(customers.first.created_at)
+      expect(customer["attributes"]["id"]).to eq(customers.first.id)
     end
     
-    xit "finds a single customer by updated_at" do
-      customers = create_list(:customer, 3)
+    it "finds a single customer by updated_at" do
+      customers = create_list(:customer, 3, updated_at: "2018-01-01T11:11:11.000Z")
 
       get "/api/v1/customers/find?updated_at=#{customers.first.updated_at}"
 
-      customer = JSON.parse(response.body)
+      customer = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(customer["updated_at"]).to eq(customers.first.updated_at)
+      expect(customer["attributes"]["id"]).to eq(customers.first.id)
     end
     
   end
@@ -62,9 +62,9 @@ describe 'Customer finders' do
 
       get "/api/v1/customers/find_all?id=#{customers.first.id}"
 
-      filtered_customers = JSON.parse(response.body)
+      filtered_customers = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(filtered_customers.first["id"]).to eq(customers.first.id)
+      expect(filtered_customers.first["attributes"]["id"]).to eq(customers.first.id)
     end
     
     it "finds all customers by first name" do
@@ -76,11 +76,11 @@ describe 'Customer finders' do
 
       get "/api/v1/customers/find_all?first_name=#{customer_1.first_name}"
 
-      filtered_customers = JSON.parse(response.body)
+      filtered_customers = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_customers.count).to eq(2)
-      expect(filtered_customers.first["first_name"]).to eq(customer_1.first_name)
-      expect(filtered_customers.last["first_name"]).to eq(customer_1.first_name)
+      expect(filtered_customers.first["attributes"]["first_name"]).to eq(customer_1.first_name)
+      expect(filtered_customers.last["attributes"]["first_name"]).to eq(customer_1.first_name)
     end
     
     it "finds all customers by last name" do
@@ -92,46 +92,39 @@ describe 'Customer finders' do
 
       get "/api/v1/customers/find_all?last_name=#{customer_1.last_name}"
 
-      filtered_customers = JSON.parse(response.body)
+      filtered_customers = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_customers.count).to eq(2)
-      expect(filtered_customers.first["last_name"]).to eq(customer_1.last_name)
-      expect(filtered_customers.last["last_name"]).to eq(customer_1.last_name)
+      expect(filtered_customers.first["attributes"]["last_name"]).to eq(customer_1.last_name)
+      expect(filtered_customers.last["attributes"]["last_name"]).to eq(customer_1.last_name)
     end
     
     it "finds a all customers by created_at" do
-      customer_1 = create(:customer, created_at: "2018-01-01")
-      customer_2 = create(:customer, created_at: "2018-01-02")
-      customer_3 = create(:customer, created_at: "2018-01-01")
-      customer_4 = create(:customer, created_at: "2018-01-03")
-      customer_5 = create(:customer, created_at: "2018-01-04")
+      customer_1 = create(:customer, created_at: "2018-01-01T11:11:11.000Z")
+      customer_2 = create(:customer, created_at: "2018-01-02T11:11:11.000Z")
+      customer_3 = create(:customer, created_at: "2018-01-02T11:11:11.000Z")
+      customer_4 = create(:customer, created_at: "2018-01-02T11:11:11.000Z")
 
-      created_at = URI.encode(customer_1.created_at.to_formatted_s(:db))
-      get "/api/v1/customers/find_all?created_at=#{created_at}"
+      get "/api/v1/customers/find_all?created_at=#{customer_2.created_at}"
 
-      filtered_customers = JSON.parse(response.body)
+      filtered_customers = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(filtered_customers.count).to eq(2)
-      expect(filtered_customers.first["id"]).to eq(customer_1.id)
-      expect(filtered_customers.last["id"]).to eq(customer_3.id)
+      expect(filtered_customers.count).to eq(3)
+      expect(filtered_customers.first["attributes"]["id"]).to eq(customer_2.id)
     end
     
     it "finds a all customers by updated_at" do
-      customer_1 = create(:customer, updated_at: "2018-01-01")
-      customer_2 = create(:customer, updated_at: "2018-01-02")
-      customer_3 = create(:customer, updated_at: "2018-01-01")
-      customer_4 = create(:customer, updated_at: "2018-01-03")
-      customer_5 = create(:customer, updated_at: "2018-01-04")
+      customer_1 = create(:customer, updated_at: "2018-01-01T11:11:11.000Z")
+      customer_2 = create(:customer, updated_at: "2018-01-02T11:11:11.000Z")
+      customer_3 = create(:customer, updated_at: "2018-01-02T11:11:11.000Z")
+      customer_4 = create(:customer, updated_at: "2018-01-02T11:11:11.000Z")
 
+      get "/api/v1/customers/find_all?updated_at=#{customer_2.updated_at}"
 
-      updated_at = URI.encode(customer_1.updated_at.to_formatted_s(:db))
-      get "/api/v1/customers/find_all?updated_at=#{customer_1.updated_at}"
-
-      filtered_customers = JSON.parse(response.body)
+      filtered_customers = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(filtered_customers.count).to eq(2)
-      expect(filtered_customers.first["id"]).to eq(customer_1.id)
-      expect(filtered_customers.last["id"]).to eq(customer_3.id)
+      expect(filtered_customers.count).to eq(3)
+      expect(filtered_customers.first["attributes"]["id"]).to eq(customer_2.id)
     end
     
   end

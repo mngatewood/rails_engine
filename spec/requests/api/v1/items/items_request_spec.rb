@@ -4,9 +4,10 @@ describe "Items API" do
   it "sends a list of items" do
     merchant = create(:merchant)
     create_list(:item, 3, merchant_id: merchant.id)
+
     get "/api/v1/items"
 
-    items = JSON.parse(response.body)
+    items = JSON.parse(response.body)["data"]
     expect(response).to be_successful
     expect(items.count).to eq(3)
   end
@@ -17,8 +18,8 @@ describe "Items API" do
 
     get "/api/v1/items/#{id}"
 
-    item = JSON.parse(response.body)
+    item = JSON.parse(response.body)["data"]
     expect(response).to be_successful
-    expect(item["id"]).to eq(id)
+    expect(item["attributes"]["id"]).to eq(id)
   end
 end

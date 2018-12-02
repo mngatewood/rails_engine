@@ -36,9 +36,9 @@ describe "Merchants revenue API" do
     date = URI.encode(invoice_1.created_at.to_formatted_s(:db))
     get "/api/v1/merchants/revenue?date=#{date}"
 
-    revenue = JSON.parse(response.body)
+    revenue = JSON.parse(response.body)["data"]
     expect(response).to be_successful
-    expect(revenue).to eq(3.0)
+    expect(revenue["attributes"]["total_revenue"].to_f).to eq(3.0)
   end
   
   it "should return the total revenue for that merchant across successful transactions" do
@@ -62,9 +62,9 @@ describe "Merchants revenue API" do
 
     get "/api/v1/merchants/#{merchant_1.id}/revenue"
 
-    revenue = JSON.parse(response.body)
+    revenue = JSON.parse(response.body)["data"]
     expect(response).to be_successful
-    expect(revenue.first["total_revenue"]).to eq(7.03)
+    expect(revenue.first["attributes"]["total_revenue"]).to eq(7.03)
   end
 
   it "should return the total revenue for that merchant for a specific invoice date" do
@@ -98,9 +98,9 @@ describe "Merchants revenue API" do
     date = URI.encode(invoice_1.created_at.to_formatted_s(:db))
     get "/api/v1/merchants/#{merchant_1.id}/revenue?date=#{date}"
 
-    revenue = JSON.parse(response.body)
+    revenue = JSON.parse(response.body)["data"]
     expect(response).to be_successful
-    expect(revenue.first["total_revenue"]).to eq(3.97)
+    expect(revenue.first["attributes"]["total_revenue"]).to eq(3.97)
   end
 
 end

@@ -1,8 +1,7 @@
 class Api::V1::Merchants::MostRevenueController < ApplicationController
 
   def index
-    render json: Merchant.top_merchants_by_revenue(params[:quantity]),
-      each_serializer: MerchantMostRevenueSerializer
+    render json: MerchantSerializer.new(Merchant.top_merchants_by_revenue(merchant_params[:quantity]))
   end
 
   private

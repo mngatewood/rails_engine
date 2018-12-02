@@ -6,7 +6,7 @@ describe "Customers API" do
 
     get "/api/v1/customers"
 
-    customers = JSON.parse(response.body)
+    customers = JSON.parse(response.body)["data"]
     expect(response).to be_successful
     expect(customers.count).to eq(3)
   end
@@ -16,8 +16,8 @@ describe "Customers API" do
 
     get "/api/v1/customers/#{id}"
 
-    customer = JSON.parse(response.body)
+    customer = JSON.parse(response.body)["data"]
     expect(response).to be_successful
-    expect(customer["id"]).to eq(id)
+    expect(customer["attributes"]["id"]).to eq(id)
   end
 end

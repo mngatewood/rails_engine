@@ -11,10 +11,10 @@ describe "Merchant items API" do
 
     get "/api/v1/merchants/#{merchant_1.id}/items"
 
-    merchant_items = JSON.parse(response.body)
+    merchant_items = JSON.parse(response.body)["data"]
     expect(response).to be_successful
     expect(merchant_items.count).to eq(3)
-    expect(merchant_items.first["id"]).to eq(merchant_1_items.first.id)
-    expect(merchant_items.last["id"]).to eq(merchant_1_items.last.id)
+    expect(merchant_items.first["attributes"]["id"]).to eq(merchant_1_items.first.id)
+    expect(merchant_items.last["attributes"]["id"]).to eq(merchant_1_items.last.id)
   end
 end
