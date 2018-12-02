@@ -10,7 +10,7 @@ describe 'Customer finders' do
 
       customer = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(customer["id"]).to eq(customers.first.id)
+      expect(customer["attributes"]["id"]).to eq(customers.first.id)
     end
     
     it "finds a single customer by first name" do
@@ -20,7 +20,7 @@ describe 'Customer finders' do
 
       customer = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(customer["first_name"]).to eq(customers.first.first_name)
+      expect(customer["attributes"]["first_name"]).to eq(customers.first.first_name)
     end
     
     it "finds a single customer by last name" do
@@ -30,7 +30,7 @@ describe 'Customer finders' do
 
       customer = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(customer["last_name"]).to eq(customers.first.last_name)
+      expect(customer["attributes"]["last_name"]).to eq(customers.first.last_name)
     end
     
     it "finds a single customer by created_at" do
@@ -64,7 +64,7 @@ describe 'Customer finders' do
 
       filtered_customers = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(filtered_customers.first["id"]).to eq(customers.first.id)
+      expect(filtered_customers.first["attributes"]["id"]).to eq(customers.first.id)
     end
     
     it "finds all customers by first name" do
@@ -79,8 +79,8 @@ describe 'Customer finders' do
       filtered_customers = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_customers.count).to eq(2)
-      expect(filtered_customers.first["first_name"]).to eq(customer_1.first_name)
-      expect(filtered_customers.last["first_name"]).to eq(customer_1.first_name)
+      expect(filtered_customers.first["attributes"]["first_name"]).to eq(customer_1.first_name)
+      expect(filtered_customers.last["attributes"]["first_name"]).to eq(customer_1.first_name)
     end
     
     it "finds all customers by last name" do
@@ -95,8 +95,8 @@ describe 'Customer finders' do
       filtered_customers = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_customers.count).to eq(2)
-      expect(filtered_customers.first["last_name"]).to eq(customer_1.last_name)
-      expect(filtered_customers.last["last_name"]).to eq(customer_1.last_name)
+      expect(filtered_customers.first["attributes"]["last_name"]).to eq(customer_1.last_name)
+      expect(filtered_customers.last["attributes"]["last_name"]).to eq(customer_1.last_name)
     end
     
     it "finds a all customers by created_at" do

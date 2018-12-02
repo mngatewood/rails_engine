@@ -14,7 +14,7 @@ describe "Invoice items finders" do
 
       invoice_item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(invoice_item["attributes"]["id"].to_i).to be_between(invoice_items.first.id, invoice_items.last.id)
+      expect(invoice_item["attributes"]["id"]).to be_between(invoice_items.first.id, invoice_items.last.id)
     end
 
   end

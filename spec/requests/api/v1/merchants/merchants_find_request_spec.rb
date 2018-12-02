@@ -10,7 +10,7 @@ describe "Merchants finders" do
 
       merchant = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(merchant["attributes"]["id"].to_i).to eq(merchants.first.id)
+      expect(merchant["attributes"]["id"]).to eq(merchants.first.id)
     end
     
     it "finds a single merchant by name" do
@@ -31,7 +31,7 @@ describe "Merchants finders" do
 
       merchant = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(merchant["attributes"]["id"].to_i).to eq(merchant_1.id)
+      expect(merchant["attributes"]["id"]).to eq(merchant_1.id)
     end
 
     it "finds a single merchant by updated_at" do
@@ -42,7 +42,7 @@ describe "Merchants finders" do
 
       merchant = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(merchant["attributes"]["id"].to_i).to eq(merchant_1.id)
+      expect(merchant["attributes"]["id"]).to eq(merchant_1.id)
     end
 
   end
@@ -56,7 +56,7 @@ describe "Merchants finders" do
 
       filtered_merchants = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(filtered_merchants.first["attributes"]["id"].to_i).to eq(merchants.first.id)
+      expect(filtered_merchants.first["attributes"]["id"]).to eq(merchants.first.id)
     end
     
     it "finds all merchants by name" do
@@ -86,7 +86,7 @@ describe "Merchants finders" do
       filtered_merchants = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_merchants.count).to eq(3)
-      expect(filtered_merchants.first["attributes"]["id"].to_i).to eq(merchant_2.id)
+      expect(filtered_merchants.first["attributes"]["id"]).to eq(merchant_2.id)
     end
     
     it "finds a all merchants by updated_at" do
@@ -100,7 +100,7 @@ describe "Merchants finders" do
       filtered_merchants = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_merchants.count).to eq(3)
-      expect(filtered_merchants.first["attributes"]["id"].to_i).to eq(merchant_2.id)
+      expect(filtered_merchants.first["attributes"]["id"]).to eq(merchant_2.id)
     end
     
   end

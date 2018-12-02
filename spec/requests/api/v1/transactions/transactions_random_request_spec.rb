@@ -13,7 +13,7 @@ describe "Transactions finders" do
 
       transaction = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(transaction["attributes"]["id"].to_i).to be_between(transactions.first.id, transactions.last.id)
+      expect(transaction["attributes"]["id"]).to be_between(transactions.first.id, transactions.last.id)
     end
 
   end

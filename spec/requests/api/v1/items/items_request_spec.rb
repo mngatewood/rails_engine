@@ -20,6 +20,6 @@ describe "Items API" do
 
     item = JSON.parse(response.body)["data"]
     expect(response).to be_successful
-    expect(item["attributes"]["id"].to_i).to eq(id)
+    expect(item["attributes"]["id"]).to eq(id)
   end
 end
