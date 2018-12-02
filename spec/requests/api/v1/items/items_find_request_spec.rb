@@ -11,7 +11,7 @@ describe "Items finders" do
 
       item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(item["id"]).to eq(items.first.id)
+      expect(item["attributes"]["id"].to_i).to eq(items.first.id)
     end
     
     it "finds a single item by name" do
@@ -22,7 +22,7 @@ describe "Items finders" do
 
       item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(item["name"]).to eq(items.first.name)
+      expect(item["attributes"]["name"]).to eq(items.first.name)
     end
 
     it "finds a single item by description" do
@@ -33,7 +33,7 @@ describe "Items finders" do
 
       item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(item["id"]).to eq(items.first.id)
+      expect(item["attributes"]["id"].to_i).to eq(items.first.id)
     end
 
     it "finds a single item by unit price" do
@@ -44,7 +44,7 @@ describe "Items finders" do
 
       item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(item["id"].to_f).to eq(items.first.id)
+      expect(item["attributes"]["id"].to_i).to eq(items.first.id)
     end
 
     it "finds a single item by merchant id" do
@@ -59,12 +59,12 @@ describe "Items finders" do
 
       item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(item["id"]).to eq(item_1.id)
+      expect(item["attributes"]["id"].to_i).to eq(item_1.id)
     end
 
     it "finds a single merchant by created_at" do
       merchant = create(:merchant)
-      item_1 = create(:item, created_at: "2018-01-01T11:11:11.000Z")
+      item_1 = create(:item, created_at: "2018-01-01T11:11:11.000Z", merchant: merchant)
       items = create_list(:item, 3, merchant: merchant)
 
       get "/api/v1/items/find?created_at=#{item_1.created_at}"
@@ -76,7 +76,7 @@ describe "Items finders" do
 
     it "finds a single merchant by updated_at" do
       merchant = create(:merchant)
-      item_1 = create(:item, updated_at: "2018-01-01T11:11:11.000Z")
+      item_1 = create(:item, updated_at: "2018-01-01T11:11:11.000Z", merchant: merchant)
       items = create_list(:item, 3, merchant: merchant)
 
       get "/api/v1/items/find?updated_at=#{item_1.updated_at}"
@@ -98,7 +98,7 @@ describe "Items finders" do
 
       filtered_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(filtered_items.first["id"]).to eq(items.first.id)
+      expect(filtered_items.first["attributes"]["id"].to_i).to eq(items.first.id)
     end
     
     it "finds all items by name" do
@@ -114,8 +114,8 @@ describe "Items finders" do
       filtered_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_items.count).to eq(2)
-      expect(filtered_items.first["name"]).to eq(item_1.name)
-      expect(filtered_items.last["name"]).to eq(item_1.name)
+      expect(filtered_items.first["attributes"]["name"]).to eq(item_1.name)
+      expect(filtered_items.last["attributes"]["name"]).to eq(item_1.name)
     end
     
     it "finds all items by description" do
@@ -132,8 +132,8 @@ describe "Items finders" do
       filtered_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_items.count).to eq(2)
-      expect(filtered_items.first["description"]).to eq(item_1.description)
-      expect(filtered_items.last["description"]).to eq(item_1.description)
+      expect(filtered_items.first["attributes"]["description"]).to eq(item_1.description)
+      expect(filtered_items.last["attributes"]["description"]).to eq(item_1.description)
     end
     
     it "finds all items by unit price" do
@@ -150,8 +150,8 @@ describe "Items finders" do
       filtered_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_items.count).to eq(2)
-      expect(filtered_items.first["unit_price"]).to eq(item_1.unit_price.to_s)
-      expect(filtered_items.last["unit_price"]).to eq(item_1.unit_price.to_s)
+      expect(filtered_items.first["attributes"]["unit_price"]).to eq(item_1.unit_price.to_s)
+      expect(filtered_items.last["attributes"]["unit_price"]).to eq(item_1.unit_price.to_s)
     end
     
     it "finds all items by merchant_id" do
@@ -169,8 +169,8 @@ describe "Items finders" do
       filtered_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_items.count).to eq(2)
-      expect(filtered_items.first["id"]).to eq(item_1.id)
-      expect(filtered_items.last["id"]).to eq(item_3.id)
+      expect(filtered_items.first["attributes"]["id"]).to eq(item_1.id)
+      expect(filtered_items.last["attributes"]["id"]).to eq(item_3.id)
     end
     
     it "finds a all items by created_at" do
