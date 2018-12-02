@@ -1,7 +1,7 @@
 class Api::V1::Items::MostRevenueController < ApplicationController
 
   def index
-    render json: Item.most_revenue(item_params[:quantity])
+    render json: ItemSerializer.new(Item.most_revenue(item_params[:quantity]))
   end
 
   private

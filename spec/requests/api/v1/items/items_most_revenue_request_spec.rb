@@ -29,6 +29,6 @@ describe "Items most revenue API" do
 
     items = JSON.parse(response.body)["data"]
     expect(response).to be_successful
-    expect(items.map{|i|i["id"]}).to eq([item_3.id, item_4.id, item_2.id])
+    expect(items.map{|i|i["id"].to_i}).to eq([item_3.id, item_4.id, item_2.id])
   end
 end
