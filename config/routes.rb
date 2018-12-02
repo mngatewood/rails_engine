@@ -65,9 +65,12 @@ Rails.application.routes.draw do
         get '/invoices', to: 'invoice_items/invoices#index'
       end
 
+      resources :transactions, only: [:index, :show] do
+        get '/invoices', to: 'transactions/invoices#index'
+      end
+      
       resources :items, only: [:index, :show]
       resources :customers, only: [:index, :show]
-      resources :transactions, only: [:index, :show]
 
     end
   end
