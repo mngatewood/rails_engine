@@ -34,9 +34,9 @@ describe "Customers favorite merchant API" do
 
     get "/api/v1/customers/#{customer_1.id}/favorite_merchant"
 
-    merchant = JSON.parse(response.body)
+    merchant = JSON.parse(response.body)["data"]
     expect(response).to be_successful
-    expect(merchant["id"]).to eq(merchant_2.id)
+    expect(merchant["attributes"]["id"].to_i).to eq(merchant_2.id)
 
   end
 end

@@ -38,4 +38,16 @@ class Merchant < ApplicationRecord
             .where("invoices.created_at::DATE = ?", date[0..9])
   end
 
+  def self.customer_favorite(customer_id)
+    Merchant.select("merchants.*, COUNT(transactions.id) AS sales")
+            .joins(invoices: :transactions)
+            .where(transactions: {result: 'success'})
+            .where(invoices: {customer_id: customer_id})
+            .group(:id)
+            .order("sales desc")
+            .limit(1)
+            .first
+  end
+
+
 end
