@@ -11,7 +11,7 @@ describe "Items finders" do
 
       item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(item["attributes"]["id"].to_i).to eq(items.first.id)
+      expect(item["attributes"]["id"]).to eq(items.first.id)
     end
     
     it "finds a single item by name" do
@@ -33,7 +33,7 @@ describe "Items finders" do
 
       item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(item["attributes"]["id"].to_i).to eq(items.first.id)
+      expect(item["attributes"]["id"]).to eq(items.first.id)
     end
 
     it "finds a single item by unit price" do
@@ -44,7 +44,7 @@ describe "Items finders" do
 
       item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(item["attributes"]["id"].to_i).to eq(items.first.id)
+      expect(item["attributes"]["id"]).to eq(items.first.id)
     end
 
     it "finds a single item by merchant id" do
@@ -59,7 +59,7 @@ describe "Items finders" do
 
       item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(item["attributes"]["id"].to_i).to eq(item_1.id)
+      expect(item["attributes"]["id"]).to eq(item_1.id)
     end
 
     it "finds a single merchant by created_at" do
@@ -98,7 +98,7 @@ describe "Items finders" do
 
       filtered_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(filtered_items.first["attributes"]["id"].to_i).to eq(items.first.id)
+      expect(filtered_items.first["attributes"]["id"]).to eq(items.first.id)
     end
     
     it "finds all items by name" do

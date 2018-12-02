@@ -10,7 +10,7 @@ describe "Customers finders" do
 
       customer = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(customer["id"]).to be_between(customers.first.id, customers.last.id)
+      expect(customer["attributes"]["id"]).to be_between(customers.first.id, customers.last.id)
     end
 
   end

@@ -25,7 +25,7 @@ describe "Transactions API" do
 
     transaction = JSON.parse(response.body)["data"]
     expect(response).to be_successful
-    expect(transaction["attributes"]["id"].to_i).to eq(id)
+    expect(transaction["attributes"]["id"]).to eq(id)
   end
 
 end

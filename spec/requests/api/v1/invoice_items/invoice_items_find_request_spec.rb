@@ -14,7 +14,7 @@ describe "Invoice Items finders" do
 
       invoice_item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(invoice_item["attributes"]["id"].to_i).to eq(invoice_items.first.id)
+      expect(invoice_item["attributes"]["id"]).to eq(invoice_items.first.id)
     end
     
     it "finds a single invoice item by quantity" do
@@ -125,7 +125,7 @@ describe "Invoice Items finders" do
       filtered_invoice_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_invoice_items.count).to eq(1)
-      expect(filtered_invoice_items.first["attributes"]["id"].to_i).to eq(invoice_items.first.id)
+      expect(filtered_invoice_items.first["attributes"]["id"]).to eq(invoice_items.first.id)
     end
     
     it "finds all invoice items by quantity" do

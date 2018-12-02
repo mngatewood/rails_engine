@@ -13,7 +13,7 @@ describe "Invoices finders" do
 
       invoice = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(invoice["attributes"]["id"].to_i).to eq(invoices.first.id)
+      expect(invoice["attributes"]["id"]).to eq(invoices.first.id)
     end
     
     it "finds a single invoice by status" do
@@ -67,7 +67,7 @@ describe "Invoices finders" do
 
       invoice = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(invoice["attributes"]["id"].to_i).to eq(invoice_1.id)
+      expect(invoice["attributes"]["id"]).to eq(invoice_1.id)
     end
 
     it "finds a single invoice by updated_at" do
@@ -80,7 +80,7 @@ describe "Invoices finders" do
 
       invoice = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(invoice["attributes"]["id"].to_i).to eq(invoice_1.id)
+      expect(invoice["attributes"]["id"]).to eq(invoice_1.id)
     end
 
   end
@@ -157,7 +157,7 @@ describe "Invoices finders" do
       filtered_invoices = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_invoices.count).to eq(3)
-      expect(filtered_invoices.first["attributes"]["id"].to_i).to eq(invoice_2.id)
+      expect(filtered_invoices.first["attributes"]["id"]).to eq(invoice_2.id)
     end
 
     it "finds all invoices by updated_at" do
@@ -173,7 +173,7 @@ describe "Invoices finders" do
       filtered_invoices = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_invoices.count).to eq(3)
-      expect(filtered_invoices.first["attributes"]["id"].to_i).to eq(invoice_2.id)
+      expect(filtered_invoices.first["attributes"]["id"]).to eq(invoice_2.id)
     end
 
   end

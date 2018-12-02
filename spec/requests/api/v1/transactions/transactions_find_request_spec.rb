@@ -13,7 +13,7 @@ describe "Transaction finders" do
 
       transaction = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(transaction["attributes"]["id"].to_i).to eq(transactions.first.id)
+      expect(transaction["attributes"]["id"]).to eq(transactions.first.id)
     end
     
     it "finds a single transaction by credit card number" do
@@ -84,7 +84,7 @@ describe "Transaction finders" do
 
       transaction = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(transaction["attributes"]["id"].to_i).to eq(transaction_1.id)
+      expect(transaction["attributes"]["id"]).to eq(transaction_1.id)
     end
 
     it "finds a single invoice by updated_at" do
@@ -98,7 +98,7 @@ describe "Transaction finders" do
 
       transaction = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(transaction["attributes"]["id"].to_i).to eq(transaction_1.id)
+      expect(transaction["attributes"]["id"]).to eq(transaction_1.id)
     end
 
   end
@@ -116,7 +116,7 @@ describe "Transaction finders" do
       filtered_transactions = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_transactions.count).to eq(1)
-      expect(filtered_transactions.first["attributes"]["id"].to_i).to eq(transactions.first.id)
+      expect(filtered_transactions.first["attributes"]["id"]).to eq(transactions.first.id)
     end
     
     it "finds all transactions by credit card number" do
@@ -192,7 +192,7 @@ describe "Transaction finders" do
       filtered_transactions = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_transactions.count).to eq(3)
-      expect(filtered_transactions.first["attributes"]["id"].to_i).to eq(transactions.first.id)
+      expect(filtered_transactions.first["attributes"]["id"]).to eq(transactions.first.id)
     end
 
     it "finds a single invoice by updated_at" do
@@ -207,7 +207,7 @@ describe "Transaction finders" do
       filtered_transactions = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_transactions.count).to eq(3)
-      expect(filtered_transactions.first["attributes"]["id"].to_i).to eq(transactions.first.id)
+      expect(filtered_transactions.first["attributes"]["id"]).to eq(transactions.first.id)
     end
 
   end
