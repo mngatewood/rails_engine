@@ -28,6 +28,6 @@ describe "Items best day API" do
 
     best_day = JSON.parse(response.body)["data"]
     expect(response).to be_successful
-    expect(best_day["date"]).to eq(invoice_5.created_at.strftime("%F"))
+    expect(best_day["attributes"]["date"]).to eq(invoice_5.created_at.strftime("%F"))
   end
 end

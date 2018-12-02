@@ -11,7 +11,7 @@ describe "Items finders" do
 
       item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(item["id"]).to be_between(items.first.id, items.last.id)
+      expect(item["attributes"]["id"].to_i).to be_between(items.first.id, items.last.id)
     end
 
   end
