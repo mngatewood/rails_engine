@@ -34,12 +34,17 @@ rails -s
 
 5. **Navigate** to the endpoints
 
-http://localhost:3000/api/v1/customers
-http://localhost:3000/api/v1/merchants
-http://localhost:3000/api/v1/invoices
-http://localhost:3000/api/v1/items
-http://localhost:3000/api/v1/invoice_items
-http://localhost:3000/api/v1/transactions
+http://localhost:3000/api/v1/customers 
+
+http://localhost:3000/api/v1/merchants 
+
+http://localhost:3000/api/v1/invoices 
+
+http://localhost:3000/api/v1/items 
+
+http://localhost:3000/api/v1/invoice_items 
+
+http://localhost:3000/api/v1/transactions 
 
 *These are examples of endpoints.  Additional routes can be found by running:*
 ```
