@@ -37,14 +37,14 @@ describe "Invoice Items finders" do
       customer = create(:customer)
       invoice = create(:invoice, merchant: merchant, customer: customer)
       item = create(:item, merchant: merchant)
-      invoice_item_1 = create(:invoice_item, unit_price: 11, invoice: invoice, item: item)
+      invoice_item_1 = create(:invoice_item, unit_price: 1100, invoice: invoice, item: item)
       invoice_items = create_list(:invoice_item, 3, invoice: invoice, item: item)
 
       get "/api/v1/invoice_items/find?unit_price=#{invoice_item_1.unit_price}"
 
       invoice_item = JSON.parse(response.body)["data"]
       expect(response).to be_successful
-      expect(invoice_item["attributes"]["unit_price"].to_f).to eq(invoice_item_1.unit_price)
+      expect(invoice_item["attributes"]["unit_price"]).to eq((invoice_item_1.unit_price.to_f/100).to_s)
     end
 
     it "finds a single invoice item by invoice id" do
@@ -150,14 +150,14 @@ describe "Invoice Items finders" do
       invoice = create(:invoice, merchant: merchant, customer: customer)
       item = create(:item, merchant: merchant)
       invoice_item_1 = create(:invoice_item, invoice: invoice, item: item)
-      invoice_items = create_list(:invoice_item, 3, unit_price: 11, invoice: invoice, item: item)
+      invoice_items = create_list(:invoice_item, 3, unit_price: 1100, invoice: invoice, item: item)
 
       get "/api/v1/invoice_items/find_all?unit_price=#{invoice_items.first.unit_price}"
 
       filtered_invoice_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_invoice_items.count).to eq(3)
-      expect(filtered_invoice_items.first["attributes"]["unit_price"].to_f).to eq(invoice_items.first.unit_price)
+      expect(filtered_invoice_items.first["attributes"]["unit_price"]).to eq((invoice_items.first.unit_price.to_f/100).to_s)
     end
 
     it "finds all invoice items by invoice id" do

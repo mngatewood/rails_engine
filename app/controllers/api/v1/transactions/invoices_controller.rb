@@ -1,5 +1,5 @@
 class Api::V1::Transactions::InvoicesController < ApplicationController
-  def index
+  def show
     render json: InvoiceSerializer.new(Invoice.joins(:transactions)
                                               .where(transactions: { id: params[:transaction_id] }))
   end
