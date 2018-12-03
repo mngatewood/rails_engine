@@ -45,6 +45,7 @@ Rails.application.routes.draw do
         get '/find', to: 'find#show'
         get '/find_all', to: 'find#index'
         get '/random', to: 'random#show'
+        get '/:id/favorite_merchant', to: 'favorite_merchant#show'
       end
 
       resources :merchants, only: [:index, :show] do
@@ -71,7 +72,7 @@ Rails.application.routes.draw do
       end
 
       resources :transactions, only: [:index, :show] do
-        get '/invoices', to: 'transactions/invoices#index'
+        get '/invoice', to: 'transactions/invoices#show'
       end
       
       resources :customers, only: [:index, :show] do

@@ -138,20 +138,19 @@ describe "Items finders" do
     
     it "finds all items by unit price" do
       merchant = create(:merchant)
-      item_1 = create(:item, merchant: merchant, unit_price: 899.00)
-      item_2 = create(:item, merchant: merchant, unit_price: 199.00)
-      item_3 = create(:item, merchant: merchant, unit_price: 899.00)
-      item_4 = create(:item, merchant: merchant, unit_price: 49.99)
-      item_5 = create(:item, merchant: merchant, unit_price: 19.99)
+      item_1 = create(:item, merchant: merchant, unit_price: 89900)
+      item_2 = create(:item, merchant: merchant, unit_price: 19900)
+      item_3 = create(:item, merchant: merchant, unit_price: 89900)
+      item_4 = create(:item, merchant: merchant, unit_price: 4999)
+      item_5 = create(:item, merchant: merchant, unit_price: 1999)
 
-      unit_price = URI.encode(item_1.unit_price.to_s)
-      get "/api/v1/items/find_all?unit_price=#{unit_price}"
+      get "/api/v1/items/find_all?unit_price=#{item_1.unit_price}"
 
       filtered_items = JSON.parse(response.body)["data"]
       expect(response).to be_successful
       expect(filtered_items.count).to eq(2)
-      expect(filtered_items.first["attributes"]["unit_price"]).to eq(item_1.unit_price.to_s)
-      expect(filtered_items.last["attributes"]["unit_price"]).to eq(item_1.unit_price.to_s)
+      expect(filtered_items.first["attributes"]["unit_price"]).to eq((item_1.unit_price/100).to_s)
+      expect(filtered_items.last["attributes"]["unit_price"]).to eq((item_1.unit_price/100).to_s)
     end
     
     it "finds all items by merchant_id" do
