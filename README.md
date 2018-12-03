@@ -7,7 +7,6 @@
 SSH:
 ```
 git clone git@github.com:mngatewood/rails_engine.git
-
 ```
 
 HTTPS:
