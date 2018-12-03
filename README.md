@@ -1,25 +1,62 @@
-# README
+# Rails Engine
+
+## Installation
+
+1.  **Clone** this repo into your project directory.
+
+SSH:
+```
+git clone git@github.com:mngatewood/rails_engine.git
+
+```
+
+HTTPS:
+```
+git clone https://github.com/mngatewood/rails_engine.git
+```
+
+2.  **Bundle** required dependencies
+
+```
+bundle install && bundle update
+```
+
+3.  **Build** the database
+
+```
+rake db:{drop,create,migrate,seed}
+```
+
+4.  **Run** the web server
+
+```
+rails -s
+```
+
+5. **Navigate** to the endpoints
+
+http://localhost:3000/api/v1/customers
+http://localhost:3000/api/v1/merchants
+http://localhost:3000/api/v1/invoices
+http://localhost:3000/api/v1/items
+http://localhost:3000/api/v1/invoice_items
+http://localhost:3000/api/v1/transactions
+
+*These are examples of endpoints.  Additional routes can be found by running:*
+```
+rake routes
+```
+
+6.  **Test** the application
+```
+rspec
+```
 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Known-Working Configuration
 
-Things you may want to cover:
+* MacOS High Sierra v10.13.6
 
-* Ruby version
+* Ruby 2.4.1
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Rails 5.1.6.1
